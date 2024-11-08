@@ -4,7 +4,7 @@ import Editor from "./components/Editor";
 import List from "./components/List";
 import { useState, useEffect, useRef } from "react";
 
-// 한번만 생성되면 되서 외부에 선언
+// 임시 데이터(기본 데이터) : 계속 렌더링할 필요 없으니 App 컴포넌트 밖에 선언, 데이터가 어떤 형태로 있어야 하는지 설정
 const mockData = [
   {
     id: 0,
