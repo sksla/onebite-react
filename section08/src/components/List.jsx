@@ -3,7 +3,7 @@ import TodoItem from "./TodoItem";
 import { useState } from "react";
 
 // App.jsx에서 todo state 받아오기(구조분해할당)
-const List = ({ todos }) => {
+const List = ({ todos, onUpdate }) => {
   // 검색어 저장할 state 선언
   const [search, setSearch] = useState("");
 
@@ -41,7 +41,7 @@ const List = ({ todos }) => {
         {filteredTodos.map((todo) => {
           // 매개변수 todo엔 하나의 TodoItem 객체가 들어있음
           // 필터링 된 todos를 렌더링
-          return <TodoItem key={todo.id} {...todo} />;
+          return <TodoItem key={todo.id} {...todo} onUpdate={onUpdate} />;
           // 매개변수 todo의 모든 데이터가 props로 TodoItem.jsx에 전달됨
           // 컴포넌트 렌더링 시 모든 item 컴포넌트에 반드시 key props를 고유한 값으로 전달해줘야 함
         })}
