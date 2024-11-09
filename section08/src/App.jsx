@@ -1,3 +1,4 @@
+// 전체
 import "./App.css";
 import Header from "./components/Header";
 import Editor from "./components/Editor";
@@ -31,6 +32,7 @@ function App() {
   // Todo의 index 역할을 할 useRef 선언
   const idRef = useRef(3);
 
+  // 추가 기능 ====================================================================
   const onCreate = (content) => {
     const newTodo = {
       // 이 데이터 객체를 todos state 배열해 추가해야 함
@@ -46,8 +48,12 @@ function App() {
     // spread 연산자(...)로 기존의 todos state 배열의 값을 펼쳐준 후 추가할 newTodo 데이터를 넣는다.
     setTodos([newTodo, ...todos]);
   };
+  // ==================================================================================
 
+  // 체크박스 기능 =========================================================================
   const onUpdate = (targetId) => {
+    // 체크박스가 클릭된 요소의 id(targetId를 인수로 받아옴)
+
     // todos State의 값들 중에
     // targetId와 일치하는 id를 갖는 투두 아이템의 isDone 변경
 
@@ -56,8 +62,25 @@ function App() {
       todos.map((todo) =>
         todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo
       )
+      /*
+        todos.map((todo) =>{ // isDone의 값이 변경된 todo로 state를 변경하기 위한 변경 함수
+          
+          if(todo.id === targetId) { 
+            // 일치 => todo를 spread연산자(...)로 풀어헤쳐서 isDone의 상태를 현재의 반대값으로 만들기
+            return {
+              ...todo,
+              isDone : !todo.isDone
+            }        
+          }
+
+          // 일치 X => 원래의 todo 반환
+          return todo
+          
+        })
+      */
     );
   };
+  //===========================================================================================
 
   return (
     <div className="App">
@@ -69,7 +92,11 @@ function App() {
         <Editor onCreate={onCreate} />
       </section>
       <section>
-        <List todos={todos} onUpdate={onUpdate} />
+        <List
+          todos={todos}
+          // List.jsx에 props로 onUpdate 함수 전달
+          onUpdate={onUpdate}
+        />
       </section>
     </div>
   );
