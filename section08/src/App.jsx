@@ -27,7 +27,7 @@ const mockData = [
 ];
 
 function App() {
-  const [todos, setTodos] = useState([mockData]);
+  const [todos, setTodos] = useState(mockData);
   // Todo의 index 역할을 할 useRef 선언
   const idRef = useRef(3);
 
@@ -57,7 +57,7 @@ function App() {
         <Editor onCreate={onCreate} />
       </section>
       <section>
-        <List />
+        <List todos={todos} />
       </section>
     </div>
   );
