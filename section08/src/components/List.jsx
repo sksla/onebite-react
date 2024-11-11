@@ -5,7 +5,7 @@ import { useState } from "react";
 
 // App.jsx에서 todo state 받아오기(구조분해할당)
 // App.jsx에서 onUdpate(체크박스 기능) 받아오기(구조분해할당)
-const List = ({ todos, onUpdate }) => {
+const List = ({ todos, onUpdate, onDelete }) => {
   // ======검색 기능========
   // 검색어 저장할 state 선언
   const [search, setSearch] = useState("");
@@ -44,10 +44,18 @@ const List = ({ todos, onUpdate }) => {
         {filteredTodos.map((todo) => {
           // 매개변수 todo엔 하나의 TodoItem 객체가 들어있음
           // 필터링 된 todos를 렌더링
-          return <TodoItem key={todo.id} {...todo} onUpdate={onUpdate} />;
+          return (
+            <TodoItem
+              key={todo.id}
+              {...todo}
+              onUpdate={onUpdate}
+              onDelete={onDelete}
+            />
+          );
           // {...todo} : 매개변수 todo의 모든 데이터가 props로 TodoItem.jsx에 전달됨
           // key={todo.id} : 컴포넌트 렌더링 시 모든 item 컴포넌트에 반드시 key props를 고유한 값으로 전달해줘야 함
           // onUpdate : TodoItem.jsx에 props로 onUpdate 함수 전달하기
+          // onDelete : TodoItem.jsx에 onDelete 함수 전달하기
         })}
       </div>
     </div>
