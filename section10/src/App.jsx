@@ -3,7 +3,33 @@ import "./App.css";
 import Header from "./components/Header";
 import Editor from "./components/Editor";
 import List from "./components/List";
-import { useState, useReducer, useRef } from "react";
+import { useState, useReducer, useRef, useCallback } from "react";
+
+/*
+  1. 최적화  => List.jsx
+  2. useMemo => List.jsx
+  3. memo => Header.jsx
+  4. 객체 타입의 최적화 방법 2가지 
+     방법 1. memo 함수 안 두 번째 인수로 콜백함수 추가하여 커스터마이징 ==> TodoItem.jsx
+     방법 2. useCallback 사용하기 ==> TodoItem.jsx, App.jsx
+*/
+
+/*
+  * useCallback : 불필요한 함수의 재생성 방지
+    - 객체 타입을 최적화 하는 방법
+    - 리렌더링 되더라도 다시 생성되지 않게 방지하는 기능
+
+  * useCallback 사용
+    1. useCallback을 import로 불러옴
+    2. useCallback의 구조
+    ex) useCallback(function, [deps])
+        - function : 최적화할 함수 (재생성 방지할 함수)
+        - deps : 최적화 기준이 될 배열
+          --> deps를 빈 배열로 놔둠 ===> Mount(탄생)될 때에만 함수 생성, 그 뒤로는 생성 X
+        
+        - function을 그대로 생성해 반환해줌
+        - deps가 변경되었을 때만 최적화 함
+*/
 
 // 임시 데이터(기본 데이터) : 계속 렌더링할 필요 없으니 App 컴포넌트 밖에 선언, 데이터가 어떤 형태로 있어야 하는지 설정
 const mockData = [
@@ -27,8 +53,6 @@ const mockData = [
   },
 ];
 
-// useReducer
-// - action 객체의 값에 따라 변화된 state를 반환
 function reducer(state, action) {
   switch (action.type) {
     case "CREATE":
@@ -45,13 +69,11 @@ function reducer(state, action) {
 }
 
 function App() {
-  // useReducer
   const [todos, dispatch] = useReducer(reducer, mockData);
 
-  // todo의 index 역할
   const idRef = useRef(3); // 임시 데이터 id와 겹치지 않도록 3으로 설정
 
-  const onCreate = (content) => {
+  const onCreate = useCallback((content) => {
     dispatch({
       type: "CREATE",
       data: {
@@ -61,21 +83,34 @@ function App() {
         date: new Date().getTime(),
       },
     });
-  };
+  }, []);
+  // deps를 빈 배열로 놔둠 -> Mount될 때에만 함수 생성, 그 뒤로는 생성 X
 
-  const onUpdate = (targetId) => {
+  const onUpdate = useCallback((targetId) => {
     dispatch({
       type: "UPDATE",
       targetId: targetId,
     });
-  };
+  }, []);
 
+  /*
   const onDelete = (targetId) => {
     dispatch({
       type: "DELETE",
       targetId: targetId,
     });
   };
+
+  const func = useCallback(() => {}, []);
+  */
+
+  // 위에 걸 합친 버전
+  const onDelete = useCallback((targetId) => {
+    dispatch({
+      type: "DELETE",
+      targetId: targetId,
+    });
+  }, []);
 
   return (
     <div className="App">
