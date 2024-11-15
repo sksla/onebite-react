@@ -49,8 +49,9 @@ funcA(...arr1);
 
 /* 
   2. Rest 매개변수
-  : 함수에 전달된 나머지 인수를 배열로 수집하는 기능
+  : 함수에 전달된 인수 중 나머지 인수를 배열로 묶는 기능
   -> Rest는 나머지 , 나머지 매개변수
+  *** Rest 매개변수는 전달된 값의 타입와 상관없이 "항상 배열"로 묶임 ***
 
   - 함수의 정의에서 사용
   - rest 문법도 ... 기호를 사용하기 때문데 spread와 비슷해보이나 둘은 서로 다른 역할을 하는 문법
@@ -58,28 +59,7 @@ funcA(...arr1);
   주의! =>  rest 매개변수 뒤에 추가적으로 매개변수 선언 불가!! ==> 오류 발생
 */
 
-// 2-1. 객체
-const blueToy = {
-  type: "bear",
-  price: 15000,
-  color: "blue",
-};
-
-//const { type, price, color } = blueToy;
-const { type, ...rest1 } = blueToy;
-
-console.log(type); // "bear"
-console.log(rest1); // { price:15000, color:"blue" }
-
-// 2-2. 배열
-const color = ["red", "blue", "green", "yellow"];
-const [c1, c2, ...rest2] = color;
-
-console.log(c1); // "red"
-console.log(c2); // "blue"
-console.log(rest2); // ["green", "yellow"]
-
-// 2-3. 함수에서의 사용
+// 함수에서의 사용
 
 /*
 function funcB(...rest) {
@@ -108,6 +88,50 @@ function funcB(one, two, ...ds) {
 funcB(...arr1);
 
 /*
- spread 문법 : 객체나 배열에서 반복적인 값들을 퍼뜨려주는 문법
- rest 문법 : 특정 부분들을 하나의 배열이나 객체로 묶는 문법
+ spread 문법 : 객체나 배열에서 반복적인 값들을 "퍼뜨려주는" 문법
+ rest 문법 : 특정 부분들을 하나의 배열이나 객체로 "묶는" 문법
+
+
+ spread 와 rest 구별 기준
+
+ 1. 기존의 배열이나 객체 앞에 ... ==> spread 연산자
+ 2. 함수 매개변수 앞에 ... ==> Rest 매개변수
 */
+
+/*
+  +) Rest 매개변수와 Rest Properties
+
+  - Rest Properties ==> 구조 분해 할당과 함께 사용될 때의 특별한 경우
+                        기존의 데이터 타입을 유지하는 것이 특징
+                        구조 분해 할당에서 남은 속성들을 처리하기 위해 설계된 문법
+
+  * 함수 Rest 매개변수와 Rest Properties 차이점
+                            Rest 매개변수     |           Rest Properties
+  ====================================================================================
+    사용되는 문맥     | 함수의 매개변수로 사용  |  객체, 배열 구조 분해 할당에서 사용
+  ------------------------------------------------------------------------------------  
+    결과 데이터 구조  |   항상 배열로 묶임      |   기존의 데이터 타입으로 묶임
+  ------------------------------------------------------------------------------------  
+    예제             |  function fuc(...args) |   const {a, ...rest} = obj
+*/
+
+// - 객체의 Rest Properties
+const blueToy = {
+  type: "bear",
+  price: 15000,
+  color: "blue",
+};
+
+//const { type, price, color } = blueToy;
+const { type, ...rest1 } = blueToy;
+
+console.log(type); // "bear"
+console.log(rest1); // { price:15000, color:"blue" }
+
+// - 배열의 Rest Properties
+const color = ["red", "blue", "green", "yellow"];
+const [c1, c2, ...rest2] = color;
+
+console.log(c1); // "red"
+console.log(c2); // "blue"
+console.log(rest2); // ["green", "yellow"]
