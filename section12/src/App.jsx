@@ -44,7 +44,7 @@ function App() {
         {/* <Route path="/diary" element={<Diary />} /> */}
         <Route path="/diary/:id" element={<Diary />} />
         <Route path="*" element={<Notfound />} />
-        {/* * => 와일드 카드 */}
+        {/* "*" => 와일드 카드, switch case문의 default와 같은 역할 */}
       </Routes>
     </>
   );
