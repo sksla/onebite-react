@@ -9,7 +9,7 @@ Currently, two official plugins are available:
 
 # 페이지 라우팅
 ## 목차
-1. [소개](#intro)
+1. [소개](#1-소개)
    - 페이지 라우팅이란?
    - [mpa 방식과 서버 사이드 렌더링](#-MPA(Multi-Page-Application)-방식)
    - spa 방식과 클라우드 사이드 렌더링
