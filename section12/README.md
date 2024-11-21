@@ -18,7 +18,7 @@ Currently, two official plugins are available:
 ---
 <br>
 
-## 1 소개
+## 1. 소개
 <a id="intro"></a>
 
 ### - 페이지 라우팅이란?
