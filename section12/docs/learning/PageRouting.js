@@ -200,3 +200,185 @@
 
 
 */
+
+/*
+
+ 폰트, 이미지, 레이아웃
+
+ 1. 폰트 설정
+
+  * 폰트 파일 다운로드 방식
+  : 폰트 파일을 다운로드해 프로젝트에 포함하는 방법
+
+  방법
+  1. 원하는 폰트 파일을 /public 폴더에 넣기
+  2. index.css에서 폰트 파일 불러오기
+  - css에서 폰트를 불러오려면 @font-face 라는 설정을 작성
+  > font-family 속성 : 폰트의 이름을 원하는대로 적어줌
+  > src 속성 : 폰트 파일 위치를 명시(확장자까지!!)
+  ex) index.css
+  @font-face {
+    font-family: "NanumPenScript";
+    src: url("/NanumPenScript-Regular.ttf");
+  }
+  ==> public 폴더 바로 아래를 가리키려면 그냥 /를 적어주면 됨
+
+  3. 적용하기
+  ex) body * {
+        font-family: "NanumPenScript";
+      }
+
+  
+  * 웹 폰트 방식
+   : 특정 URL로 폰트를 가져오는 방법
+
+   방법
+   1. 구글 Fonts에 접속(https://fonts.google.com)
+   2. 원하는 폰트 검색 
+   3. style 섹션에서 select regular 400 클릭해 폰트 선택
+   4. [selected families]창에 정상적으로 추가된 거 확인
+   5. 웹 폰트 주소 확인 위해 <style> 태그 항목에서 @import~로 시작하는 웹 폰트 주소 복사
+   6. index.css에 붙여 수정
+   ex)
+   @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Yeon+Sung&display=swap');
+
+   body{
+     font-family: "Nanum Pen Script";
+     margin: 0px;
+   }
+
+
+ 2. 이미지 설정
+  * 이미지 렌더링 설정 방법 1
+  
+  1. 렌더링할 이미지 파일들을 src/assets 폴더 안에 넣기
+    - 저장된 image 파일들은 import문을 통해 불러와서 이용 가능
+  2. 이미지가 렌더링 될 컴포넌트 파일(ex: App.jsx)에서 이미지 import로 불러오기
+    - 확장자까지 입력!
+    ex) //App.jsx
+    import image1 from './assets/image1.png;
+    import image2 from './assets/image2.png;
+  
+  3. return문 안에서 렌더링하도록 설정
+    - img 태그의 src속성으로 불러온 파일명을 적는다
+    ex) 
+    fuction App(){
+      return(
+        <>
+          <div>
+            <img src={image1} />
+            <img src={image2} />
+          <div>
+        </>
+      )
+    }
+
+  > public 폴더와 assets폴더 모두 정적인 파일을 보관할 수 있는 곳인데 이미지 파일들을 
+  왜 font 파일은 public에 이미지 파일은 aseets 폴더에 보관하는 걸까?
+  ===> vite가 내부적으로 진행하는 이미지 최적화 설정 때문!
+  이미지를 최적화할 것이 아니라면 public 폴더에 넣어도 상관 없음
+  
+   +) 이미지를 public 폴더에 넣었을 때
+    - vite가 자동으로 제공하는 이미지 최적화가 동작하지 않음
+    - public 폴더 안 이미지들은 import를 통해 불러오지 않음
+    - URL을 통해 불러오도록 설정
+    ex)
+      fuction App(){
+        return(
+          <>
+            <div>
+              <img src={"/image1.png"} />
+              <img src={"/image2.png"} />
+            <div>
+          </>
+        )
+      }  
+
+      > 이미지를 assets 폴더에 넣었을 때 ==> * 이미지 렌더링 설정 방법 1 참고
+
+
+  * 이미지 최적화
+  - vite가 내부적으로 진행
+  참고) 구체적으로 어떻게 이루어지고 어떤 것들이 최적화되는지 확인을 위해서는 
+  react앱을 build한 다음 배포 모드(프로덕션 모드)로 실행시켜보면 확인 가능
+    - 명령어
+    > 프로젝트 빌드 : npm run build
+      - 리액트 앱의 빌드 결과로 dist 파일 생성됨
+      - dist/assets 폴더 안에 index~.js 파일 : 하나의 파일에 작성한 모든 리액트 코드들이 압축된 상태로 번들링 되어있음
+    > 배포모드로 실행(빌드 결과물 실행) : npm run preview
+      - 포트번호가 달라짐
+    - public 보관과 assets 보관의 차이점 (빌드 결과물에 접속해 개발자 도구(f12)에서 확인 가능)
+    
+      1. 불러온 이미지들의 주소가 다름
+        - element 탭에서 확인 가능
+        > public 폴더에서 불러온 이미지들 주소 : 일반적인 주소 => 새로고침 시 매번 불러옴
+        ex) <img src="/image1.png" />
+        > src/assets 에서 불러온 이미지들 주소 : 암호문 같은 포맷(Data URI) => 새로고침 시 다시 불러오지 않음
+        ex) <img src="data:image/~~~~~~" />
+      2. 새로고침시 다시 불러오는 지 아닌지가 다름
+        - network 탭에서 확인 가능 
+          : img 필터 +  Preserve log(네트워크요청유지)옵션 클릭 후 size, time 컬럼에서 확인
+            ==>새로고침 할 때마다 브라우저에서 지금 어떤 이미지들을 어떻게 요청하고 있는지 로그가 잘 쌓임
+           > Data URI 형태의 이미지 : size -> 용량이 적혀있음 / time : 걸린 시간이 적혀잇음
+           > 일반적인 주소 형태 이미지 : size -> memory cached(메모리에 저장됨) / time : 0ms 
+    
+    +) Data URI
+    : 이미지와 같은 외부 데이터들을 문자열 형태로 브라우저의 메모리에 캐싱하기 위해서 사용되는 포맷
+    Data URI 포맷으로 이미지 주소 설정 시 자동으로 브라우저 메모리에 저장(캐싱)되어서 새로고침하더라도 다시 불러오지 않도록 최적화 됨
+
+   
+    >> 한 번 불러온 이미지들을 다시 불러오지 않도록 브라우저의 캐시를 이용해서 이미지를 최적화하기 위해서는 
+    ==> src/assets 폴더에 저장 후 import문을 통해 불러온다
+
+    !! 주의 !!
+    불러오는 이미지가 굉장히 많은 경우(만개, 10만개,...)엔 img를 public 폴더에 넣는게 좋음 
+    ==> 많이 캐싱하면 브라우저 메모리 용량 과부하됨
+
+    - 결론
+    소수의 이미지 사용 ==> src/assets 폴더에 보관해 캐싱되도록
+    굉장한 다수의 이미지 사용 ==> /pubilc 폴더에 보관
+
+  * 이미지 렌더링 설정 방법 2 (모듈화)
+    : 이미지 렌더링 설정 방법 1은 이미지 파일 개수에 따라 import문을 작성해야하는 번거로움 존재
+    ==> 이미지를 불러오는 코드들을 별도의 모듈로 분리
+
+    - 방법
+    1. src/util 폴더에 js파일 생성
+    2. js파일 상단에 import문 작성
+    ex)
+    // get-image.js
+    import image1 from './../assets/image1.png;
+    import image2 from './../assets/image2.png;
+    
+    +) 이미지 렌더링 설정 방법 1과 경로가 다르니 경로에 주의!
+      
+    3. 이미지를 반환하는 함수 작성
+      - 함수를 내보내기 위해 맨 앞에 export 키워드 추가
+    ex)
+    export funciton getImage(){
+      return image1;
+    }
+
+    4. 렌더링할 컴포넌트에서 해당 js파일 import로 불러오기
+    ex)
+    // App.jxs
+    import {getImage} from './util/get-image;
+
+    5. 불러온 함수를 image 태그의 src 속성에 넣기
+    ex)
+    <img src={getImage()} />
+
+
+3. 레이아웃 설정
+  - 루트 컨테이너 스타일 설정시 id가 root인 요소의 스타일로 설정
+    이유 : 리액트 앱에서는 <body> 안에 <div id="root">인 요소 아래에 root 컴포넌트가 렌더링 됨 
+
+  - 요소 가운데 배치 => margin: 0 auto;
+  - 요소의 높이를 세로로 꽉차게 늘리기 : min-height: 100vh; height:100%;
+   +) vh(Viewport Height) : 현재 브라우저의 스크린 높이 (100vh : 스크린의 최대 높이 만큼 설정)
+  - 그림자 설정 : ex) box-shadow: rgba(100, 100, 100, 0.2) 0px 0px 29px 0px;
+
+
+
+
+*/
