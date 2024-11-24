@@ -378,7 +378,246 @@
    +) vh(Viewport Height) : 현재 브라우저의 스크린 높이 (100vh : 스크린의 최대 높이 만큼 설정)
   - 그림자 설정 : ex) box-shadow: rgba(100, 100, 100, 0.2) 0px 0px 29px 0px;
 
-
-
-
 */
+
+/*
+  공통 컴포넌트 구현하기
+  (모든 페이지에서 공통으로 구현되는 버튼, 헤더 컴포넌트 세팅)
+
+  * 들어가기 전
+
+  프로젝트 개발 순서는 사람마다 다르다!
+
+  감정 일기장 프로젝트 개발 순서 :
+  1) 페이지 라우팅이나 글로벌 레리아웃 설정 등의 밑작업
+  >> 2)공통컴포넌트 구현 >> 3) 개별 페이지 및 복잡한 기능 구현
+
+  - 공통 컴포넌트를 먼저 구현하는 이유
+    - 공통 컴포넌트를 먼저 구현해놓고 시작 시 각각 3) 순서에서 공통 컴포넌트를 그냥 가져다가 쓰면 됨
+    - 복잡한 프로젝트를 진행할 때 여기저기 정신없이 코드를 작성하는 일을 최대한 방지할 수 있음
+
+
+
+  > 구현 전 src폴더 아래에 컴포넌트들을 모아둘 components 폴더 생성
+
+  * 버튼 컴포넌트 구현
+
+  1. 기본적인 버튼 UI 작업
+  - 버튼 컴포넌트 생성
+  ex)
+  import "./Button.css";
+
+  const Button = ({ text, type, onClick }) => {
+    return (
+      // 클래스명은 버튼 컴포넌트명과 동일하게 설정
+      <button className="Button"}>
+        {text}
+      </button>
+    );
+  };
+
+  export default Button;
+
+  - 버튼 css에서 스타일 설정
+  ex)
+  .Button {
+    background-color: rgb(236, 236, 236);
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    white-space: nowrap; // 버튼 안 텍스트가 화면이 줄어들어도 줄바꿈 되지 않도록 설정
+  }
+
+  2. 버튼 컴포넌트가 부모컴포넌트로 받는 props에 따라 다르게 동작하도록 만들기
+  - 객체구조분해 할당 이용해 props를 여러개 받아옴
+    - text : 버튼 내부 텍스트 영역의 내용
+    - type : 어떤 종류의 버튼인지 설정 ==> type에 따라 버튼 색 다르게 처리
+    - onClick : 이 버튼이 클릭되었을 때 실행할 이벤트 핸들러 함수
+                ==> 버튼 요소의 onClick 속성에 연결 
+    - 어떤 컴포넌트에 이 props의 값에 따라서 각각 다른 스타일을 적용 시키는 방법
+  ==> 렌더링하는 요소의 클래스네임을 동적 변경되도록 설정
+  클래스 네임값을 중괄호로 감싼 후 백틱으로 템플릿 리터럴로 바꿈 
+  --> 원래의 클래스네임을 그대로 두고 띄어쓰기 후 "원래클래스네임_${type}" 라는 클래스 네임 추가하면 됨
+      >> type props에 따라서 클래스 네임 변경됨 
+
+    - ex) Button.jsx
+    import "./Button.css";
+
+    const Button = ({ text, type, onClick }) => {
+      return (
+        <button onClick={onClick} className={`Button Button_${type}`}>
+          {text}
+        </button>
+      );
+    };
+
+    export default Button;
+
+
+
+  - type에 따라 버튼 스타일 다르게 작성
+    - ex) Button.css
+    .Button {
+      background-color: rgb(236, 236, 236);
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 18px;
+      white-space: nowrap; 
+    }
+
+    .Button_POSITIVE {
+      background-color: rgb(100, 201, 100);
+      color: white;
+    }
+
+    .Button_NEGATIVE {
+      background-color: rgb(253, 86, 95);
+      color: white;
+    }
+
+
+  - 부모 컴포넌트에서 props를 전달하면 됨
+    - 일반 버튼은 type 생략 가능 ==> 타입이 생략된 버튼 클래스 네임 Button_undefined 으로 설정됨
+      css에선 그런 이름의 css를 설정한 적이 없기 때문에 기본적인 스타일 버튼으로 잘 렌더링 됨
+    - ex) App.jsx
+    import Button from "./components/Button";
+
+    function App() {
+    
+    return (
+      <>
+        <Header
+          title={"Header"}
+          leftChild={<Button text={"Left"} />}
+          rightChild={<Button text={"Right"} />}
+        />
+        
+        <Button
+          text={"일반"}
+          onClick={() => {
+            // 버튼 클릭시 동작할 코드 작성
+          }}
+        />
+
+        <Button
+          text={"긍정"}
+          type={"POSITIVE"}
+          onClick={() => {
+            // 버튼 클릭시 동작할 코드 작성
+          }}
+        />
+
+      </>
+    );
+  }
+
+  export default App;
+
+
+
+  * 헤더 컴포넌트 구현
+  1. Header 컴포넌트 생성 후 기본 UI 작업
+  ex) Header.jsx
+  import "./Header.css";
+
+  const Header = () => {
+    return (
+      <header className="Header"></header>
+    );
+  };
+
+  export default Header;
+
+
+
+
+  2. 가운데(text), 왼쪽과 오른쪽(버튼) 이렇게 세가지 섹션으로 나눠서 UI 작업
+  - 객체구조분해할당을 이용해 props 여러개 받아옴 
+    - title : 가운데 <div>(header_center) 에 들어갈 텍스트
+    - leftChild : 왼쪽 <div>에 들어가게될 버튼 또는 HTML 요소 같은 children 요소
+    - rightChild : 오른쪽 <div>에 들어가게될 버튼 또는 HTML 요소 같은 children 요소
+    ex) Header.jsx
+    import "./Header.css";
+
+    const Header = ({ title, leftChild, rightChild }) => {
+      return (
+      <header className="Header">
+        <div className="header_left">{leftChild}</div>
+        <div className="header_center">{title}</div>
+        <div className="header_right">{rightChild}</div>
+      </header>
+    );
+    };
+
+    export default Header;
+
+
+  - 부모 컴포넌트에서 props 전달
+    - leftChild, rightChile 속성에 Button컴포넌트 전달
+    - ex) App.jsx
+      import Header from "./components/Header";
+
+      function App() {
+    
+        return (
+          <>
+            <Header
+              title={"Header"}
+              leftChild={<Button text={"Left"} />}
+              rightChild={<Button text={"Right"} />}
+            />
+          </>
+        );
+      }
+
+    export default App;
+
+  - Header 스타일 설정
+  ex) Header.css
+    .Header {
+      display: flex; // 가로 방향 배치 
+      align-items: center; //헤더 안 텍스트, 버튼 다 가운데 위치하도록 설정
+
+      padding: 20px 0px; // 위아래 여백
+      border-bottom: 1px solid rgb(226, 226, 226);
+    }
+
+    //Header 요소 아래 div(.header_left, .header_center, .header_right)
+    // 들에게 한 번에 display : flex 속성 넣어줌
+    .Header > div {
+      display: flex;
+    }
+
+    .Header .header_center {
+      width: 50%;
+      font-size: 25px;
+      justify-content: center; // display 속성이 flex로 설정된 요소 안에서 자식들이 배치되는 위치를 가운데로 설정
+    }
+
+    // 센터의 width가 50% 차지하고 있으므로 나머지는 25%씩 차지하도록
+    .Header .header_left {
+      width: 25%;
+      justify-content: flex-start; // 요소들을 시작되는 지점(왼쪽)에 붙도록
+      
+    }
+
+    .Header .header_right {
+      width: 25%;
+      justify-content: flex-end; // 요소들을 끝나는 지점(오른쪽)에 붙도록
+    }
+    
+
+
+
+
+
+
+
+
+
+
+  */
