@@ -1,8 +1,11 @@
 import "./App.css";
+import { useReducer, useRef, createContext } from "react";
+
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Diary from "./pages/Diary";
 import New from "./pages/New";
+import Edit from "./pages/Edit";
 import Notfound from "./pages/Notfound";
 // 이미지 불러오는 코드들을 별도의 모듈로 분리함 => src/util/get-emotion-image.js
 import { getEmotionImage } from "./util/get-emotion-image";
@@ -17,54 +20,102 @@ import Header from "./components/Header";
 /*
   
 */
-function App() {
-  const nav = useNavigate();
 
-  const onClickButton = () => {
-    nav("/new");
+// 임시 일기 데이터
+const mockData = [
+  {
+    id: 1,
+    createdDate: new Date("2024-11-27").getTime(),
+    emotionId: 1,
+    content: "1번 일기 내용",
+  },
+  {
+    id: 2,
+    createdDate: new Date("2024-11-26").getTime(),
+    emotionId: 2,
+    content: "2번 일기 내용",
+  },
+  {
+    id: 3,
+    createdDate: new Date("2024-10-26").getTime(),
+    emotionId: 2,
+    content: "3번 일기 내용",
+  },
+];
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "CREATE":
+      return [action.data, ...state];
+    case "UPDATE":
+      return state.map((item) =>
+        // 두 id의 타입이 다를 수 있음. 혹시 모를 오류 방지
+        String(item.id) === String(action.data.id) ? action.data : item
+      );
+    case "DELETE":
+      return state.filter((item) => String(item.id) !== String(action.id));
+    default:
+      return state;
+  }
+}
+
+export const DiaryStateContext = createContext();
+export const DiaryDispatchContext = createContext();
+
+function App() {
+  const [data, dispatch] = useReducer(reducer, mockData);
+  const idRef = useRef(3);
+
+  // 새로운 일기 추가
+  const onCreate = (createdDate, emotionId, content) => {
+    // 새로운 일기를 추가하는 기능
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: idRef.current++,
+        createdDate,
+        emotionId,
+        content,
+      },
+    });
+  };
+
+  // 기존 일기 수정
+  const onUpdate = (id, createdDate, emotionId, content) => {
+    dispatch({
+      type: "UPDATE",
+      data: {
+        id,
+        createdDate,
+        emotionId,
+        content,
+      },
+    });
+  };
+
+  // 기존 일기 삭제
+  const onDelete = (id) => {
+    dispatch({
+      type: "DELETE",
+      id,
+    });
   };
 
   return (
     <>
-      <Header
-        title={"Header"}
-        leftChild={<Button text={"Left"} />}
-        rightChild={<Button text={"Right"} />}
-      />
-      {/* 일반 버튼은 type 생략 가능 ==> 타입이 생략된 버튼 클래스 네임 Button_undefined 으로 설정됨
-      css에선 그런 이름의 css를 설정한 적이 없기 때문에 기본적인 스타일 버튼으로 잘 렌더링 됨
-      */}
-      <Button
-        text={"123"}
-        onClick={() => {
-          console.log("123번 버튼 클릭");
-        }}
-      />
-
-      <Button
-        text={"123"}
-        type={"POSITIVE"}
-        onClick={() => {
-          console.log("123번 버튼 클릭");
-        }}
-      />
-
-      <Button
-        text={"123"}
-        type={"NEGATIVE"}
-        onClick={() => {
-          console.log("123번 버튼 클릭");
-        }}
-      />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/new" element={<New />} />
-        {/* <Route path="/diary" element={<Diary />} /> */}
-        <Route path="/diary/:id" element={<Diary />} />
-        <Route path="*" element={<Notfound />} />
-        {/* "*" => 와일드 카드, switch case문의 default와 같은 역할 */}
-      </Routes>
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/new" element={<New />} />
+            {/* <Route path="/diary" element={<Diary />} /> */}
+            <Route path="/diary/:id" element={<Diary />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="*" element={<Notfound />} />
+            {/* "*" => 와일드 카드, switch case문의 default와 같은 역할 */}
+          </Routes>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
     </>
   );
 }
