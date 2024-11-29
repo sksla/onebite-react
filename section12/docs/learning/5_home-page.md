@@ -23,6 +23,9 @@
 
 ## Home 페이지(`/`) 구조
 
+<img src="./images/emotion_diary_Home_page.png" alt="홈페이지 구조" width="300" height="200" />
+출처 : 한입 크기로 잘라 먹는 리액트
+
 ### - Home 컴포넌트
 
 - `Header` : 공통 컴포넌트, 날짜 이동 및 제목 표시
