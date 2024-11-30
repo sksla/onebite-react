@@ -1,0 +1,40 @@
+/* 모든 섹션 설정*/
+.Editor > section {
+  margin-bottom: 40px;
+}
+
+.Editor > section > h4 {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.Editor > section > input,
+textarea {
+  background-color: rgb(236, 236, 236);
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 10px 20px;
+}
+
+/*emtionItem 스타일 설정*/
+.Editor .emotion_section .emotion_list_wrapper {
+  display: flex;
+  justify-content: space-around;
+  gap: 2%;
+}
+
+/* 오늘의 일기 섹션의 textarea 스타일*/
+.Editor > section > textarea {
+  padding: 20px;
+  width: 100%;
+  min-height: 200px;
+  resize: vertical; /*가로로는 못늘리고 세로로만 늘릴 수 있음*/
+  box-sizing: border-box; /*화면의 바깥으로 튀어나오지 않도록*/
+}
+
+/* 버튼 섹션 스타일*/
+.Editor .button_section {
+  display: flex;
+  justify-content: space-between;
+}

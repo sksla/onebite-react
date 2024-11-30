@@ -8,6 +8,7 @@ body {
   margin: 0px;
   width: 100%;
   background-color: rgb(246, 246, 246);
+  display: flex;
 }
 
 /* 실제 요소들이 나타내고 있는 메인 컨테이너 설정 */
