@@ -57,7 +57,7 @@ const Editor = ({ onSubmit }) => {
 
   const nav = useNavigate();
 
-  // 날짜 onChange 이벤트 핸들러
+  // onChange 이벤트 핸들러
   const onChangeInput = (e) => {
     let name = e.target.name; // 어떤 요소에 입력이 들어온건지(요소의 name속성값)
     let value = e.target.value; // 입력된 값이 무엇인지?(요소의 value값)
