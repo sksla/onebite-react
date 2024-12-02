@@ -12,7 +12,7 @@
   margin-bottom: 10px;
 }
 
-/* 감정 선택 조건부 스타일링*/
+/* 감정 선택 시 강조 스타일 */
 .EmotionItem_on_1 {
   color: white;
   background-color: rgb(100, 201, 100);
