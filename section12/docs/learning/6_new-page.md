@@ -10,12 +10,12 @@
 2. [기능 구현](#2-기능-구현)
    - Header
    - 일기 작성 폼
-     (1) [state 관리](#1-사용자가-입력한-모든-데이터를-하나의-state로-관리)
-     (2) [날짜 선택](#2-날짜-선택)
-     (3) [감정 선택](#3-감정-선택)
-     (4) [일기 내용](#4-일기-내용)
-     (5) [작성 완료 버튼](#5-작성-완료-버튼)
-     (6) [작성 취소 버튼](#6-작성-취소-버튼)
+       1) [state 관리](#1-사용자가-입력한-모든-데이터를-하나의-state로-관리)
+       2) [날짜 선택](#2-날짜-선택)
+       3) [감정 선택](#3-감정-선택)
+       4) [일기 내용](#4-일기-내용)
+       5) [작성 완료 버튼](#5-작성-완료-버튼)
+       6) [작성 취소 버튼](#6-작성-취소-버튼)
    - [참고 (다른 방식의 코드)](#참고---다른-방식의-코드코드-개선)
 3. [전체 코드 구조](#3-전체-코드-구조)
 
@@ -164,6 +164,7 @@ New
       );
     };
     ```
+<br><br>
 
 ## \* 일기 작성 폼(Editor 컴포넌트)
 
@@ -190,8 +191,9 @@ New
     });
   };
   ```
+<br>
 
-  > 어떤 요소인지 구분할 수 있도록 각 입력 요소에 name 속성 부여해야함!
+> 어떤 요소인지 구분할 수 있도록 각 입력 요소에 name 속성 부여해야함!
 
 <br><br>
 
@@ -224,8 +226,10 @@ New
   > - 현재 `input.createdDate`는 Date 객체
   > - `<input type="date">`는 value속성으로 Date객체로 설정된 값을 넣으면 이해를 못함 <br>
   >   ==> `input` 요소에 날짜가 잘 렌더링 되지 않는 문제 발생
-  >   <br>
+  >   <br><br>
   >   따라서, Date객체를 문자열로 변환해서 `value`의 속성에 넣어줘야함!
+
+<br>
 
 - `<input type="date">`의 초기값 설정 및 사용자 입력 시 입력값으로 업데이트 처리
 
@@ -296,6 +300,8 @@ New
     > - `onClick`에서 직접 이벤트 객체 형태로 데이터를 만들어 전달 <br>
     >   예 : `{ target: { name: "emotionId", value: item.emotionId } }`
 
+<br>
+
 - **`EmotionItem`의 클릭 이벤트 처리**
 
   - `onClick`으로 전달된 함수가 호출되도록 `EmotionItem`의 클릭 이벤트에 연결
@@ -315,12 +321,14 @@ New
     > - **중요** : `onClick`을 설정하지 않으면 클릭 시 아무 동작도 하지 않음
     > - `onClick`에서 전달된 함수는 `Editor` 컴포넌트의 `onChangeInput`을 호출
 
+<br>
+
 - **감정 선택 하이라이팅**
 
   - **`EmotionItem` 컴포넌트에 선택 여부 전달**
 
     - `Editor` 컴포넌트에서 각 `EmotionItem` 컴포넌트를 렌더링하며,
-      선택된 감정(`input.emotionId`)과 비교하여 `isSelected` 값을 `EmotionItem`에 전달.
+      선택된 감정(`input.emotionId`)과 해당 요소의 id(`item.emotionId`)를 비교하여 `isSelected` 값을 `EmotionItem`에 전달.
 
       ```jsx
       // Editor.jsx
@@ -345,6 +353,7 @@ New
         </div>
       </section>
       ```
+<br>
 
   - **`EmotionItem`에 동적 클래스 네임 적용**
 
@@ -405,7 +414,8 @@ New
 
 ### (5) 작성 완료 버튼
 
-- 작성 완료 버튼 클릭 시, 새 일기을 App 컴포넌트의 `data` state에 추가 후 Home 페이지로 이동 (단, 뒤로 가기를 누를 때 다시 작성하기 페이지로 돌아가지 않도록 방지)
+- 작성 완료 버튼 클릭 시, 새 일기를 App 컴포넌트의 `data` state에 추가 후 Home 페이지로 이동 <br>
+  (단, 뒤로 가기를 누를 때 다시 작성하기 페이지로 돌아가지 않도록 방지)
 
 - **주의 사항**
 
@@ -520,9 +530,9 @@ const onChangeInput = (e) => {
 };
 ```
 
-#### - `getStringedDate` 함수에 `String()`와 `padStart()` 메소드 이용 :
+<br><br>
 
-- `padStart()` :
+#### - `getStringedDate` 함수에 `String()`와 `padStart()` 메소드 이용 :
 
 ```jsx
 const getStringedDate = (date) => {
@@ -533,6 +543,21 @@ const getStringedDate = (date) => {
 };
 ```
 
+- `padStart()` : **문자열의 길이를 특정 값으로 맞추기 위해** 앞쪽에 지정된 문자로 채우는 JavaScript 문자열 메서드
+   - **문법**
+     ```jsx
+     str.padStart(targetLength, padString);
+     ```
+   - **매개변수**
+      1. `targetLength` (필수):
+         - 목표로 하는 최종 문자열 길이.
+         - 원래 문자열의 길이가 `targetLength`보다 크거나 같으면 채우지 않고 원래 문자열 그대로 반환.
+      2. padString (선택):
+         - 앞쪽에 채울 문자열. 기본값은 " "(공백)
+         - `padString`의 길이가 `targetLength`를 넘으면 잘려서 사용됨
+
+<br><br>
+
 ### - 동적 클래스명에 삼항연산자가 아닌 논리연산자(&&)를 사용한 방법
 
 ```jsx
@@ -541,7 +566,7 @@ className={`EmotionItem ${isSelected && `EmotionItem_on_${emotionId}`}`}
 
 - **코드 동작 방식**
 
-  - **기본 클래스** : EmotionItem은 항상 포함
+  - **기본 클래스** : `EmotionItem`은 항상 포함
   - **조건부 클래스 추가** : `isSelected && ...`의 결과에 따라 추가되는 클래스가 달라짐 (**단락 평가**)
     - `isSelected가 true`면, 백틱 안의 템플릿 리터럴(`${emotionId}`)이 실행
     - 결과적으로 `EmotionItem_on_${emotionId}`라는 문자열이 반환
