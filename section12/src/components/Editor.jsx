@@ -1,7 +1,7 @@
 import "./Editor.css";
 import EmotionItem from "./EmotionItem";
 import Button from "./Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const emotionList = [
@@ -47,7 +47,7 @@ const getStringedDate = (targetDate) => {
 
 // onSubmit 함수 ==> new 페이지 : onCreate(새로운 일기 생성)
 //                  edit 페이지 : onUpdate(기존 일기 수정)
-const Editor = ({ onSubmit }) => {
+const Editor = ({ initData, onSubmit }) => {
   // state를 객체 형태로 => 여러 개의 값을 하나의 state에 저장하고 관리할 수 있음
   const [input, setInput] = useState({
     createdDate: new Date(),
@@ -56,6 +56,15 @@ const Editor = ({ onSubmit }) => {
   });
 
   const nav = useNavigate();
+
+  useEffect(() => {
+    if (initData) {
+      setInput({
+        ...initData,
+        createdDate: new Date(Number(initData.createdDate)),
+      });
+    }
+  }, [initData]);
 
   // onChange 이벤트 핸들러
   const onChangeInput = (e) => {
