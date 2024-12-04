@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import Editor from "../components/Editor";
 import { useContext, useEffect, useState } from "react";
 import { DiaryDispatchContext, DiaryStateContext } from "../App";
+import useDiary from "../hooks/useDiary";
 
 const Edit = () => {
   const params = useParams();
@@ -11,6 +12,9 @@ const Edit = () => {
   const nav = useNavigate();
 
   const { onDelete, onUpdate } = useContext(DiaryDispatchContext);
+
+  const curDiaryItem = useDiary(params.id);
+  /*
   const data = useContext(DiaryStateContext);
   const [curDiaryItem, setCurDiaryItem] = useState();
 
@@ -27,7 +31,7 @@ const Edit = () => {
 
     setCurDiaryItem(currentDiaryItem);
   }, [params.id, data]);
-
+*/
   const onClickDelete = () => {
     if (window.confirm("일기를 정말 삭제할까요? 다시 복구되지 않아요!")) {
       // 일기 삭제 로직
