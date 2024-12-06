@@ -5,14 +5,15 @@ import Viewer from "../components/Viewer";
 import { useContext } from "react";
 import useDiary from "../hooks/useDiary";
 import { getStringedDate } from "../util/getStringedDate";
+import usePageTitle from "../hooks/usePageTitle";
 
 const Diary = () => {
   const params = useParams();
 
   const nav = useNavigate();
+  usePageTitle(`${params.id}번 일기`);
 
   const curDiaryItem = useDiary(params.id);
-  console.log(curDiaryItem);
 
   if (!curDiaryItem) {
     return <div>데이터 로딩중..!</div>;
