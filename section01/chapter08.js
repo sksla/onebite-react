@@ -4,6 +4,8 @@
 // -> 존재하는 값을 추려내는 기능
 // -> null, undefined가 아닌 값을 찾아내는 연산자
 // -> 연산에 참여한 값이 모두 존재하는 값이라면 먼저 적힌 값 반환
+// 좌측값이 null, undefined일 때만 우측값 반환, 그렇지 않으면 좌측값 그대로 반환
+// ==> 우측 값은 null이나 undefined를 대체할 유효한 값이어야함
 
 let var1; // undefined
 let var2 = 10;
@@ -18,7 +20,7 @@ console.log(var4);
 let userName;
 let userNickName = "Winterlood";
 
-// 요구사항 : 사용자의 이름이 있으면 이름으로 없다면 닉네임 반환
+// 요구사항 : 사용자의 이름이 있으면 이름으로, 없다면 닉네임 반환
 let displayName = userName ?? userNickName;
 
 // 2. typeof 연산자
@@ -28,11 +30,12 @@ let var7 = 1;
 var7 = "hello";
 
 let t1 = typeof var7;
-console.log(t1);
+console.log(t1); // "string"
 
 // 3. 삼항 연산자
 // -> 항을 3개 사용하는 연산자
 // -> 조건식을 이용해서 참, 거짓일 때의 값을 다르게 반환
+// 조건식 ? 참일 때의 값 : 거짓일 때의 값
 let var8 = 10;
 
 // 요구사항 : 변수 res에 var8의 값이 짝수-> "짝", 홀수 -> "홀"
