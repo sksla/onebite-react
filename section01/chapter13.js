@@ -1,5 +1,6 @@
 // 콜백함수(Callback Function) : 자신이 아닌 다른 함수에, 인수로써 전달된 함수
 // 콜백 : 나중에 실행되는
+// 예시
 /*
 function main(value) {
   value();
@@ -9,8 +10,7 @@ function sub() {
   console.log("sub");
 }
 
-// 여기서 sub는 콜백함수(인수가 된 함수)
-main(sub);
+main(sub); // 여기서 sub는 콜백함수(인수가 된 함수)
 */
 
 // 1. 콜백함수
@@ -27,21 +27,32 @@ function sub() {
   console.log("i am sub");
 }
 
-main(sub);
+main(sub); // 콜백 함수는 main 함수가 언제든지 원하는 타이밍에 실행시킬 수 있음
 */
 
+// 함수 표현식 이용 1
 /*
 main(function sub() {
   console.log("i am sub");
 });
 */
 
+// 함수 표현식 이용 2 - 익명 함수
+/*
+main(function () {
+  console.log("i am sub");
+});
+*/
+
+// 화살표 함수 이용
 main(() => {
   console.log("i am sub");
 });
 
 // 2. 콜백함수의 활용
 // 구조가 거의 흡사한 함수들을 만들어야 할 때 중복된 코드를 줄여 간결하게 작성 가능
+
+// 콜백함수 활용 전 ==> 중복 코드 발생
 /*
 function repeat(count) {
   for (let idx = 1; idx <= count; idx++) {
@@ -67,7 +78,7 @@ repeatDouble(10);
 repeatTriple(10);
 */
 
-// 위의 코드를 콜백함수를 활용할 때
+// 콜백함수 활용 후
 function repeat(count, callback) {
   for (let idx = 1; idx <= count; idx++) {
     callback(idx);
