@@ -7,6 +7,7 @@ let arrA = new Array();
 // 방법 2 : 배열 리터럴 (대부분 사용)
 let arrB = [];
 
+// 배열 안에는 어떤 타입의 값이든 다 저장 가능
 let arrC = [1, 2, 3, true, "hello", null, undefined, () => {}, {}, []];
 console.log(arrC);
 
