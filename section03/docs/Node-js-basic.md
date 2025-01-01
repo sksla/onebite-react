@@ -68,6 +68,196 @@
 
 # 2. Node.js 설치
 
+## Node.js 설치 방법
+
+### 1. Node.js 설치
+
+#### - Node.js 설치 파일 다운
+
+- [Node.js 공식 사이트](https://nodejs.org/)에 접속
+
+  - 구글에 `node.js` 검색해서 공식사이트 접속
+    <figure>
+      <img src="./images/search_nodejs.png" alt="nodejs 검색" width="300" height="200" />
+      <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+    </figure>
+
+- **LTS 버전**의 초록색 버튼 클릭해서 설치 파일 다운
+  <figure>
+      <img src="./images/download_nodejs.png" alt="nodejs 설치파일 다운" width="300" height="200" />
+      <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+  - **Current** 버전 : 가장 최신 버전
+  - **LTS(Long Term Support)**: 대부분 유저들에게 추천하는 현재 가장 안정적인 버전
+
+- 다운 받은 설치 파일 실행
+
+<br><br>
+
+#### - Mac OS
+
+- 별도로 할 것 없이 일반적인 프로그램 설치하듯이 계속 버튼을 눌러서 설치 완료하면 됨
+  <figure>
+    <img src="./images/install_nodejs_mac.png" alt="mac버전 node설치" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+<br>
+
+#### - Window
+
+- 설치 시작 화면
+  <figure>
+    <img src="./images/window_nodejs_install1.png" alt="window버전 node설치1" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+- 라이센스 약관 동의 화면
+  <figure>
+    <img src="./images/window_nodejs_install2.png" alt="window버전 node설치2" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+- Node.js가 컴퓨터에 어떠한 경로에 설치될지 결정하는 화면
+
+  - 웬만하면 경로 수정하지 않고 기본값으로 그대로 두는 편이 좋음
+  <figure>
+    <img src="./images/window_nodejs_install3.png" alt="window버전 node설치3" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+- Custom Setup 화면
+
+  - 별도로 커스텀 할 것이 없으니 그냥 넘어감
+  <figure>
+    <img src="./images/window_nodejs_install4.png" alt="window버전 node설치4" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+- 필요한 도구를 자동으로 설치해주는 옵션 화면 (체크하기!)
+  <figure>
+    <img src="./images/window_nodejs_install5.png" alt="window버전 node설치5" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+- Ready to Intall 화면 (설치 준비 완료)
+  <figure>
+    <img src="./images/window_nodejs_install6.png" alt="window버전 node설치6" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+- 설치 중
+  <figure>
+    <img src="./images/window_nodejs_install7.png" alt="window버전 node설치7" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+- 설치 완료 후 finish 버튼 클릭
+  <figure>
+    <img src="./images/window_nodejs_install8.png" alt="window버전 node설치8" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+<br><br>
+
+### 2. Node.js 설치 확인
+
+- 설치 후, **터미널**(Mac) 또는 **명령 프롬프트**(Windows)를 열고 다음 명령어 입력:
+
+  ```bash
+  node -v
+  ```
+
+- 출력 예:
+
+  ```bash
+  v20.15.1
+  ```
+
+- 예시
+  <figure>
+    <img src="./images/cmd_node_version.png" alt="node버전 확인" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+  > \* 버전은 설치하는 시기에 따라 다를 수 있다
+  >
+  > - 맨 앞에 있는 버전이 **20점 대 이상의 짝수 버전**이라면 상관 없음 (⭕)
+  > - **홀수 버전** 또는 **20버전 보다 낮은 버전**은 문제가 발생할 수 있음 (❌) <br>
+  >   ==> 설치된 Node.js를 제거 한 후 다시 처음부터 설치 과정 진행
+
+- 참고) cmd 창 여는 법
+  <figure>
+    <img src="./images/open_cmd.png" alt="cmd창 여는 법" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+<br><br>
+
+### 3. NPM(Node Package Manager) 설치 확인
+
+#### - 터미널 또는 명령프롬프트에서 npm 버전 확인하는 명령어 `npm -v` 입력 후 엔터
+
+- Node.js 설치 시 NPM도 함께 설치됨
+- **NPM** : Node.js의 프로젝트 단위인 패키지를 관리하는 도구
+
+  - 새로운 패키지 생성, 외부 라이브러리 설치 또는 삭제 등 유용한 기능들을 제공
+
+- **터미널**(Mac) 또는 **명령 프롬프트**(Windows)를 열고 다음 명령어 입력하여 버전 확인:
+
+  ```bash
+  npm -v
+  ```
+
+- 출력 예 :
+
+  ```bash
+  10.7.0
+  ```
+
+- 예시
+  <figure>
+    <img src="./images/cmd_npm_version.png" alt="npm버전 확인" width="300" height="200" />
+    <figcaption>출처 : 한입 크기로 잘라 먹는 리액트</figcaption>
+  </figure>
+
+  > \* npm 버전이 잘 출력되지 않는 경우
+  >
+  > - node 설치 과정에서 문제가 발생했을 가능성이 가장 크니까 node 제거 후 다시 설치해야 함
+
+<br><br>
+
+### +) 설치 후 테스트
+
+Node.js가 제대로 설치되었는지 확인하기 위해 간단한 코드 실행 :
+
+1. 터미널 또는 명령프롬프트에서 다음 명령어로 Node.js 실행 :
+
+```bash
+node
+```
+
+2. 아래 코드를 입력하고 실행 :
+
+```javascript
+console.log("Hello, Node.js!");
+```
+
+3. 출력 예 :
+
+```plaintext
+Hello, Node.js!
+```
+
+4. 종료하려면 `Ctrl + C`를 두 번 입력
+
+5. 예시 :
+<figure>
+  <img src="./images/cmd_node_console.png" alt="node 테스트" width="300" height="200" />
+  <figcaption>출처 : 내 cmd 창</figcaption>
+</figure>
+
 <br>
 
 ---
