@@ -426,6 +426,239 @@ Hello, Node.js!
 
 # 4. Node.js 모듈 시스템 이해하기
 
+JavaScript와 Node.js로 좀 더 복잡한 프로그램을 만들기 위해 꼭 필요한 내용
+
+## 모듈(Module) 과 모듈 시스템(Module System)
+
+### 모듈(Module)
+
+- 기능들을 하나의 파일에만 다 작성하게 될 때의 문제점
+  - 해당 파일에 작성된 코드의 양이 어마어마해짐
+  - 버그 수정, 기능 개선 등등의 이유로 코드를 중간에 수정해야 될 때 수정할 부분을 찾기 힘들어져 효율이 떨어짐 --> 생산성 저하
+- 그래서 보통은 여러 가지의 기능을 구현할 때 기능별로 파일을 나눠서 개발함
+- 기능 별로 나뉘어진 각각의 자바 스크립트 파일들을 모듈이라고 부름
+- 유지보수성, 재사용성이 좋아짐
+- 예시 :
+  - 회원 관리 기능 -> user.js (user 모듈)
+  - 장바구니 기능 -> cart.js (cart 모듈)
+  - 결제 기능 -> payment.js (payment 모듈)
+
+### 모듈 시스템
+
+- 모듈을 다루는 다양한 기능을 제공하는 시스템
+- JavaScript의 모듈 시스템
+  - Common JS(CJS), ES Module(ESM), AMD, UMD, 등...
+  - Common JS와 ES Module이 많이 사용됨
+
+<br><br>
+
+## 실습 : 간단한 계산기능 만들기 (덧셈과 뺄셈만)
+
+### 1단계 : `math.js` 파일 생성 및 코드 작성
+
+#### (1) `section03/src`폴더 안에 `math.js` 라는 자바스크립트 파일 생성
+
+#### (2) 덧셈, 뺄셈 기능 코드 작성
+
+- `math.js` 파일은 math 모듈이라고 부를 수 있음
+
+```javascript
+// 덧셈
+function add(a, b) {
+  return a + b;
+}
+
+// 뺄셈
+function sub(a, b) {
+  return a - b;
+}
+```
+
+### 2단계 : 모듈 시스템을 이용하여 add,sub함수 내보내서 `index.js`파일(인덱스 모듈)에서 불러와 사용할 수 있도록 코드 작성
+
+#### - Common JS 시스템 이용
+
+(1) `module` 이라는 내장 객체에 `export`라는 프로퍼티의 값으로 객체 저장해줌
+
+- 이 객체 안에 각각 프로퍼티로 내보내고 싶은 값들 넣어주면 됨
+
+- `section03/src/math.js` :
+
+  ```javascript
+  function add(a, b) {
+    return a + b;
+  }
+
+  function sub(a, b) {
+    return a - b;
+  }
+
+  // add, sub 함수 내보내기
+  module.exports = {
+    add,
+    sub,
+  };
+  ```
+
+  > 참고) value 값으로 사용되는 변수의 이름과 키 값이 동일한 경우 <br>
+  > 변수나 함수의 이름만 명시해도 됨
+
+(2) 인덱스 모듈에서 내장함수 `require`을 이용해서 모듈의 경로를 인수로 전달하면서 불러와 사용
+
+- `section03/src/index.js`:
+
+  - 구조 분해 할당 이용 전 :
+
+    ```javascript
+    const moduleData = require("./math");
+
+    console.log(moduleData.add(1, 2));
+    console.log(moduleData.sub(1, 2));
+    ```
+
+  - 구조 분해 할당 이용 후 :
+
+    ```javascript
+    const { add, sub } = require("./math");
+
+    console.log(add(1, 2));
+    console.log(sub(1, 2));
+    ```
+
+<br>
+
+#### - ES Module 시스템 이용
+
+- CommonJS보다 훨씬 최신식으로 동작
+- React에서도 사용하게 됨
+
+(1) `package.json` 파일에서 ES Module System 사용 설정
+
+- ES Module 시스템을 사용하기 위해서는 패키지 내에 앞으로 ES Module System을 사용하겠다는 설정을 해줘야함
+- `package.json` 파일 맨 아래에 `"type":"module"`이라는 옵션을 추가로 작성해줘야 함
+- `"type":"module"` : 앞으로 이 패키지는 ES 모듈 시스템을 사용하겠다라는 뜻
+  ```
+  {
+    // 위의 생략...
+    "description": "",
+    "type": "module",
+  }
+  ```
+  > 주의) 이 설정을 한 후 CJS 모듈 시스템을 활용하는 코드를 실행하면 오류 발생 <br>
+  >
+  > - 이유 : CJS 시스템과 ES Module 시스템은 기본적으로 함께 사용 불가
+  > - 실행 시 오류 메세지
+  >
+  >   ```plaintext
+  >   ReferenceError: require is not defined in ES module scope, you can import instead
+  >   ```
+  >
+  > - 오류 내용 : require은 ES Module 시스템의 기능이 아니다. import를 대신 사용해라
+
+(2) math 모듈에서 `add`, `sub` 함수 내보내기
+
+- `export` 키워드 사용
+- `export` 키워드 뒤에 객체를 리터럴로 생성해서 그 안에 내보내고 싶은 값들 담아주기
+
+  ```javascript
+  function add(a, b) {
+    return a + b;
+  }
+
+  function sub(a, b) {
+    return a - b;
+  }
+
+  export { add, sub };
+  ```
+
+(3) index 모듈에서 import를 이용해서 `add`, `sub` 함수 불러오기
+
+- import { 가져오고자 하는 값 } from "경로"
+- 주의 : ESM(ES Module) 방식을 사용할 땐 반드시 **확장자까지 꼭 명시해줘야 함!**
+
+  ```javascript
+  import { add, sub } from "./math.js";
+
+  console.log(add(1, 2));
+  console.log(sub(1, 2));
+  ```
+
+### 3단계 : Node로 `index.js` 파일 실행
+
+- VSCode 터미널 연 후 실행 명령어 입력 :
+
+  ```bash
+  npm run start
+  ```
+
+- 결과
+  ```plaintext
+  3
+  -1
+  ```
+
+<br><br>
+
+## ES 모듈 시스템의 추가적인 몇가지 기능
+
+- EX 모듈 시스템에서는 광장히 다양한 방법으로 모듈로부터 값을 내보내고 가져올 수 있는 기능들을 지원한다
+
+### 1. `export` 키워드를 함수 선언문 앞에 작성하여 모듈로부터 내보내기
+
+- 함수 선언문 앞에 `export` 키워드를 붙여 내보낼 수 있다
+- 예시 :
+
+  ```javascript
+  export function add(a, b) {
+    return a + b;
+  }
+
+  export function sub(a, b) {
+    return a - b;
+  }
+  ```
+
+### 2. 하나의 모듈을 대포하는 디폴트 값을 내보내고 다른 모듈에서 불러오기
+
+#### (1) 모듈에서 디폴트 값 내보내기
+
+- `export` 뒤에 `default` 키워드 작성
+- 예시 :
+
+  ```javascript
+  export function add(a, b) {
+    return a + b;
+  }
+
+  export function sub(a, b) {
+    return a - b;
+  }
+
+  // 곱셈
+  export default function multiply(a, b) {
+    return a * b;
+  }
+  ```
+
+#### (2) 다른 모듈에서 디폴트값 불러오기
+
+- 기본 값으로써 내보내진 값은 다른 모듈에서 import로 불러올 때 새로운 import문을 만들어서 **중괄호 없이** 불러온다
+- 기본 값은 불러올 때 **이름을 마음대로 정해서** 불러올 수 있다.
+- 예시 :
+
+  ```javascript
+  import mul from "./math.js";
+  import { add, sub } from "./math.js";
+  ```
+
+### 3. 동일한 경로로부터 값을 불러오는 여러개의 import문을 하나로 합치기
+
+- 예시 :
+  ```javascript
+  import mul, { add, sub } from "./math.js";
+  ```
+
 <br>
 
 ---
