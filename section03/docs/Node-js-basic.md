@@ -695,6 +695,125 @@ export function sub(a, b) {
 
 # 5. Node.js 라이브러리 사용하기
 
+## 라이브러리란
+
+- 프로그램을 개발할 때 필요한 다양한 기능들을 미리 만들어 모듈화 해 놓은 것
+- 예 : 날짜 라이브러리, 수학 라이브러리...
+- 장점 : 프로그램을 만들 때 복잡하거나 귀찮은 기능들을 일일히 만들 필요 없이 원하는 기능을 제공하는 라이브러리를 설치해서 모듈 시스템으로 불러와서 이용하면 됨
+
+## 실습 : 라이브러리 설치 및 사용
+
+### 1단계 : npmjs 사이트에서 설치할 라이브러리 찾기
+
+- npmjs 접속 npmjs.com => npm 라이브러리 백화점 같은 사이트
+- 최상단의 검색바에 찾고 싶은 기능을 검색하여 관련된 라이브러리를 찾아내면 됨
+- 실습용으로 randomcolor라는 간단한 라이브러리 검색
+
+- randomcolor의 상세페이지
+
+  - 라이브러리 설치 명령어, 이용 방법 등 간단한 안내문이 작성되어 있음
+  - 상세 페이지 오른쪽 상단에 install 탭의 라이브러리 설치 명령어
+
+    ```bash
+    npm i randomcolor
+    ```
+
+### 2단계 : 라이브러리 설치
+
+- randomcolor 상세페이지 오른쪽 상단 install 탭의 라이브러리 설치 명령어 터미널에 입력
+  ```bash
+  npm i randomcolor
+  ```
+- 결과 예시 :
+
+  ```bash
+  added 1 package and audited 2 package in 1s
+  ```
+
+- 라이브러리 설치 후 변화
+
+  (1) `package.json` 파일 맨 아래에 `dependencies` 항목이 추가됨
+
+  - 해당 항목 안에는 설치한 라이브러리의 버전 정보가 들어 있음
+  - `dependencies` 항목에서 패키지에서 설치한 라이브러리와 버전 정보를 대략적으로 확인할 수 있음
+
+    ```json
+    "dependencies": {
+      "randomcolor": "^0.6.2"
+    }
+    ```
+
+  (2) 패키지 내에 `package-lock.json` 파일 생성됨
+
+  - 패키지가 사용하고 있는 라이브러리들의 버전이나 정보를 `package.json`보다 더 정확하고 엄밀하게 저장하는 파일
+  - `package.json`과의 차이점
+
+    - `package.json` : 대략적인 버전이 표기되어 있음
+
+      ```json
+        "randomcolor": "^0.6.2"
+      ```
+
+      > - ^ (Version Range, 버전 범위) : 대략적인 버전이라는 표시
+      > - ^0 : 0점대에서 1점대 이전까지의 버전 중에서 최신 버전으로 설치하겠다라는 의미
+
+    - `package-lock.json` : 실제로 설치된 버전의 정보가 명시되어 있음
+      ```json
+      "version": "0.6.2",
+      ```
+
+  (3) 패키지 내에 `node_modules` 폴더 새롭게 생성됨
+
+  - 설치한 라이브러리가 실제로 저장되는 공간
+
+### 3단계 : 설치한 `randomcolor` 라이브러리 사용해보기
+
+#### (1) `index.js`에서 라이브러리를 모듈 시스템을 이용해서 불러오기
+
+- 라이브러리에서 어떠한 값을 가져올 때는 from 뒤에 경로가 아닌 라이브러리의 이름만 명시해주면 됨
+- import문을 통해 randomColor라는 라이브러리가 내보낸 기본값을 불러옴
+
+```javascript
+import randomColor from "randomcolor";
+```
+
+#### (2) 불러온 라이브러리의 기능 이용
+
+- 랜덤한 컬러 값 출력해보기
+
+- 코드 작성
+
+  ```javascript
+  import randomColor from "randomcolor";
+
+  const color = randomColor();
+  console.log(color);
+  ```
+
+- 실행 결과
+  - `npm run start`로 실행
+  - 결과 예시 :
+    ```plaintext
+    #ff7a7c
+    ```
+
+### `package-lock.json` 파일 과 `node_modules` 폴더를 삭제됐을 경우
+
+- 실제로 라이브러리의 코드를 보관하는 `node_modules` 폴더가 사라졌기 때문에 위의 코드를 다시 한번 실행하면 오류 발생
+
+- `package.json`의 정보만 가지고 있어도 원래 설치되었던 것처럼 라이브러리 다시 설치할 수 있음
+- 라이브러리 재설치 명령어 :
+  ```bash
+  npm install
+  npm i
+  ```
+- 명령어 입력시 `package.json`의 `dependencies` 정보를 기준으로 모든 패키지, 모든 라이브러리를 다시 설치해줌
+
+- `package-lock.json`나 `node_modules`가 없어지거나 삭제되었더라도 `npm i`만 입력해주면 됨
+- 그래서 보통은 Node.js 패키지를 압축해서 누군가한테 공유하거나 GitHub 같은 곳에 업로드할 때 `node_modules` 폴더는 굳이 함께 포함하지 않음
+  - `node_modules` 폴더는 용량이 크고 무거움
+  - `package.json`만 있으면 언제든지 `npm i`, `npm install` 명령어로 필요한 라이브러리들을 다시 설치 가능
+
 <br>
 
 ---
