@@ -40,13 +40,6 @@
 
   - `workspaces` 폴더 안에 `09_springboot-workspace` 폴더 생성
 
-- #### 정리
-
-| 구분      | Spring Legacy(MVC) Project (Spring) | Spring Boot(Starter) Project (Spring Boot) |
-| --------- | ----------------------------------- | ------------------------------------------ |
-| Java 버전 | 11                                  | 17                                         |
-| IDE       | STS3 (3.9.17.RELEASE)               | STS4 (4.22.0.RELEASE)                      |
-
 <br><br>
 
 ### STS 환경 설정(workspace 세팅 : Window -> Preference 탭)
@@ -187,3 +180,10 @@
 ---
 
 <br>
+
+- #### 정리
+
+| 구분      | Spring Legacy(MVC) Project (Spring) | Spring Boot(Starter) Project (Spring Boot) |
+| --------- | ----------------------------------- | ------------------------------------------ |
+| Java 버전 | 11                                  | 17                                         |
+| IDE       | STS3 (3.9.17.RELEASE)               | STS4 (4.22.0.RELEASE)                      |
