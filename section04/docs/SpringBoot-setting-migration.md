@@ -109,6 +109,10 @@
 - `Window > Perspective > Customize Perspective` 에서 설정 가능
   (31분 44초 까지 봄)
 
+### 참고) 새로운 Boot 프로젝트 생성하는 방법
+
+- Package Explorer에서 마우스 우클릭한 다음 New 에서 Spring Starter Project를 선택해주면 됨
+
 <br>
 
 ---
@@ -131,7 +135,7 @@
 
 <br>
 
-# 2. Migration 작업
+## 2. Migration 작업
 
 ### BCryptPassword 작업
 
