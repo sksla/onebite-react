@@ -113,6 +113,12 @@
 
 - Package Explorer에서 마우스 우클릭한 다음 New 에서 Spring Starter Project를 선택해주면 됨
 
+- Name : 프로젝트명
+- Type : 빌드 프로그램 설정 (Maven으로 설정)
+- Package : 배포 시 내보낼 확장자명 설정(War로 설정)
+- Java version : 자바 버전 설정
+-
+
 <br>
 
 ---
