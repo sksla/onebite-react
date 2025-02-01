@@ -1,6 +1,6 @@
 # Spring Boot
 
-## 1. 설치 및 세팅
+# 1. 설치 및 세팅
 
 ### 자바 설치 - OpenJDK 17
 
@@ -125,7 +125,7 @@
 
 <br>
 
-### jsp 작업을 위한 세팅
+## 2. jsp 작업을 위한 세팅
 
 <br>
 
@@ -133,7 +133,7 @@
 
 <br>
 
-### 리소스 핸들링 작업
+## 3. 리소스 핸들링 작업
 
 <br>
 
@@ -141,17 +141,9 @@
 
 <br>
 
-## 2. Migration 작업
+# 2. Migration 작업
 
-### BCryptPassword 작업
-
-<br>
-
----
-
-<br>
-
-### MyBatis, Logback, log4jdbc 작업
+## 1. BCryptPassword 작업
 
 <br>
 
@@ -159,7 +151,7 @@
 
 <br>
 
-### 파일 업로드 작업
+## 2. MyBatis, Logback, log4jdbc 작업
 
 <br>
 
@@ -167,7 +159,7 @@
 
 <br>
 
-### Interceptor 작업
+## 3. 파일 업로드 작업
 
 <br>
 
@@ -175,7 +167,7 @@
 
 <br>
 
-### Scheduler 작업
+## 4. Interceptor 작업
 
 <br>
 
@@ -183,7 +175,15 @@
 
 <br>
 
-### WebSocket 작업
+## 5. Scheduler 작업
+
+<br>
+
+---
+
+<br>
+
+## 6. WebSocket 작업
 
 <br>
 
