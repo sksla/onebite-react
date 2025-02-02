@@ -191,7 +191,7 @@
 
 <br>
 
-- #### 정리
+- ### 정리
 
 | 구분      | Spring Legacy(MVC) Project (Spring) | Spring Boot(Starter) Project (Spring Boot) |
 | --------- | ----------------------------------- | ------------------------------------------ |
