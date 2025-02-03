@@ -109,15 +109,30 @@
 - `Window > Perspective > Customize Perspective` 에서 설정 가능
   (31분 44초 까지 봄)
 
-### 참고) 새로운 Boot 프로젝트 생성하는 방법
+### 실습 : 간단한 Boot 프로젝트 새로 생성하기
 
-- Package Explorer에서 마우스 우클릭한 다음 New 에서 Spring Starter Project를 선택해주면 됨
+#### 1. `Package Explorer` → 마우스 우클릭 → `New` → `Spring Starter Project` 선택
+
+  <img src="./images/New-Spring-Starter-Project.png" width="400" height="500" />
 
 - Name : 프로젝트명
 - Type : 빌드 프로그램 설정 (Maven으로 설정)
 - Package : 배포 시 내보낼 확장자명 설정(War로 설정)
 - Java version : 자바 버전 설정
--
+- Group : 보통 두번째 레벨까지는 조직이나 회사 도메인의 역순으로 적은 형태로 설정
+- Artifact : 프로젝트의 이름, 프로젝트의 고유한 이름 사용 → 빌드 후 생성된 아티팩트(보통 jar파일)의 이름에 영향을 미침
+- Package : Group과 Artifact를 조합해서 작성
+
+#### 2. Spring Boot 버전 및 dependency 설정 후 Finish
+
+  <img src="./images/New-Spring-Starter-Project-Dependencies.png" width="400" height="500" />
+
+- Spring Boot 버전 : SNAPSHOT이 붙어있지 않은 것이 안정화된 버전 → 실습에서는 `3.2.5` 버전 선택
+- dependency 설정
+  - 필요한 dependency만 추가하기 (나중에 기능 구현하면서 필요한 dependency 추가 가능함)
+  - `Spring Boot DevTools`, `Lombok`, `Spring Web` dependency 추가
+  - Make Default : 추가된 목록을 기본값으로 설정 → 나중에 선택지가 상단(`Frequently Used` 탭)에 나타남
+- `Finish` 버튼 누르면 프로젝트 생성됨
 
 <br>
 
