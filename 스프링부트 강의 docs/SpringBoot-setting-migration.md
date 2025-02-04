@@ -134,6 +134,30 @@
   - Make Default : 추가된 목록을 기본값으로 설정 → 나중에 선택지가 상단(`Frequently Used` 탭)에 나타남
 - `Finish` 버튼 누르면 프로젝트 생성됨
 
+#### 3. 생성된 프로젝트의 구조
+
+- `src/main/java` : 이곳에서 작업
+  - 설정해놓은 `Pakage`가 있음 (ex: `com.br.boot`)
+  - `Servletinitializer.java`, `SpringBootProjectApplication.java` 이 두개의 파일은 절대 삭제하면 안됨!!
+- `src/main/resource`
+  - `static` : 정적인 자원 보관 (Legacy Project에서 `src/main/webapp/resources` 폴더와 같은 역할)
+  - `templates` : `Thymeleaf` 같은 템플릿 엔진을 사용하여 동적 웹페이지를 생성할 때 사용됨, 정적인 HTML 파일 보관 → `Thymeleaf`를 사용하지 않기에 사용할 일 없음
+  - `application.properties` :
+    - 매우 중요한 파일
+    - 환경 설정과 관련된 내용을 여기에 모두 작성
+- `src/main/webapp` :
+
+  - 일반 폴더
+  - 기존 legacy 프로젝트에서 기본적으로 만들어졌던 `WEB-INF`나 `WEB-INF/views`, `WEB-INF/spring` 폴더는 이곳에서는 만들어지지 않음 → 필요한 폴더는 직접 만들어야함
+
+- 서버는 `Boot Dashboard` 탭에 `Local` 안에 자동으로 생성된 프로젝트가 올라와있음
+  - 내장 톰캣은 10버전이기 때문에 서버 관련된 class들은 `jakarta` 패키지에서 제공함 (ex: `HttpSession`,`HttpServletRequest`, `HttpServletResponse` 등)
+    - 기존 Legacy 프로젝트 migration 시 import문 수정 필수
+    - 기존 Legacy 프로젝트에선 외장 톰캣 9버전을 사용했기 때문에 자동으로 `javax` 패키지에서 제공되는 것으로 설정됨
+- `pom.xml` 파일 : 프로젝트 설정 관련 내용
+
+58분 36초
+
 <br>
 
 ---
