@@ -143,8 +143,8 @@
   - `static` : 정적인 자원 보관 (Legacy Project에서 `src/main/webapp/resources` 폴더와 같은 역할)
   - `templates` : `Thymeleaf` 같은 템플릿 엔진을 사용하여 동적 웹페이지를 생성할 때 사용됨, 정적인 HTML 파일 보관 → `Thymeleaf`를 사용하지 않기에 사용할 일 없음
   - `application.properties` :
-    - 매우 중요한 파일
-    - 환경 설정과 관련된 내용을 여기에 모두 작성
+    - **매우 중요**한 파일
+    - 프로젝트의 **환경 설정**과 관련된 내용을 여기에 모두 작성
 - `src/main/webapp` :
 
   - 일반 폴더
@@ -152,7 +152,7 @@
 
 - 서버는 `Boot Dashboard` 탭에 `Local` 안에 자동으로 생성된 프로젝트가 올라와있음
   - 내장 톰캣은 10버전이기 때문에 서버 관련된 class들은 `jakarta` 패키지에서 제공함 (ex: `HttpSession`,`HttpServletRequest`, `HttpServletResponse` 등)
-    - 기존 Legacy 프로젝트 migration 시 import문 수정 필수
+    - 기존 Legacy 프로젝트 migration 시 `javax → jakarta`로 import문 수정 필수
     - 기존 Legacy 프로젝트에선 외장 톰캣 9버전을 사용했기 때문에 자동으로 `javax` 패키지에서 제공되는 것으로 설정됨
 - `pom.xml` 파일 : 프로젝트 설정 관련 내용
 
