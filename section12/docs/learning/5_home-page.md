@@ -33,19 +33,16 @@
 - `Header` : 공통 컴포넌트, 날짜 이동 및 제목 표시
 - `DiaryList` : 정렬 필터 및 일기 리스트 렌더링
 
-
 ### - DiaryList 컴포넌트
 
 - 상단부 : 메뉴바(정렬 필터, 새일기 추가 버튼)
 - 하단부 : 반복적으로 렌더링된 `DiaryItem` 컴포넌트
-
 
 ### - DiaryItem 컴포넌트
 
 - 왼쪽 섹션 : 감정 이미지
 - 중앙 섹션 : 작성 날짜와 내용
 - 오른쪽 섹션 : 수정 버튼
-
 
 ### - 컴포넌트 간 관계
 
@@ -81,6 +78,7 @@ Home
 # 2. 기능 구현
 
 ## \* 날짜 이동
+
 버튼 클릭시 날짜가 한 달씩 이동하고 그 날짜를 실시간으로 화면에 렌더링
 
 #### Header 컴포넌트
@@ -134,7 +132,8 @@ Home
 
   ```jsx
   // Home 컴포넌트 바깥
-  const getMonthlyData = (pivotDate, data) => { // 매개변수 : 기준 날짜인 pivotDate, 일기 데이터가 담긴 data
+  const getMonthlyData = (pivotDate, data) => {
+    // 매개변수 : 기준 날짜인 pivotDate, 일기 데이터가 담긴 data
     const beginTime = new Date(
       pivotDate.getFullYear(),
       pivotDate.getMonth(),
@@ -164,7 +163,7 @@ Home
 - **변수 `monthlyData`안에 월별로 필터링 된 데이터를 담고 `DiaryList`의 `data` props로 전달**
   ```jsx
   // Home 컴포넌트 내부
-  const mothlyData = getMonthlyData(pivotData, data);
+  const mothlyData = getMonthlyData(pivotDate, data);
   ```
   ```jsx
   <DiaryList data={mothlyData} />
@@ -396,7 +395,8 @@ Home
   import { useNavigate } from "react-router-dom";
   import { useState } from "react";
 
-  const DiaryList = ({ data }) => { // Home 컴포넌트에서 props로 월별 필터링 된 mothlyData 전달 받음
+  const DiaryList = ({ data }) => {
+    // Home 컴포넌트에서 props로 월별 필터링 된 mothlyData 전달 받음
 
     // 페이지 이동 시키는 navigate 함수 변수 nav에 저장
     const nav = useNavigate();
@@ -457,7 +457,8 @@ Home
   import Button from "./Button";
   import { useNavigate } from "react-router-dom";
 
-  const DiaryItem = ({ id, emotionId, createdDate, content }) => { // DiaryList에서 props로 전달 받은 데이터 객체 구조 분해 할당으로 받아옴
+  const DiaryItem = ({ id, emotionId, createdDate, content }) => {
+    // DiaryList에서 props로 전달 받은 데이터 객체 구조 분해 할당으로 받아옴
     const nav = useNavigate(); // 페이지 이동 시키는 navigate 함수 변수 nav에 저장
 
     return (
